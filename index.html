@@ -78,10 +78,29 @@
       left: 55%;
     }
 
-    .message {
-      margin-top: 25px;
+    /* OVERLAY */
+    .overlay {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.85);
+      padding: 25px 20px;
+      box-sizing: border-box;
+      text-align: center;
+      transition: bottom 0.8s ease;
+      z-index: 3;
+      max-height: 40vh;
+      overflow-y: auto;
+    }
+
+    .overlay.show {
+      bottom: 0;
+    }
+
+    .overlay p {
       font-size: 1.4rem;
-      display: none;
+      margin: 0;
     }
 
     /* HEARTS */
@@ -104,7 +123,6 @@
       top: -10px;
       width: 10px;
       height: 10px;
-      background: red;
       opacity: 0.9;
       animation: fall 4s linear forwards;
       pointer-events: none;
@@ -134,26 +152,28 @@
     <h1>hey krista baby</h1>
 
     <p>
-      i have a important question<br><br>
+      i have an important question<br><br>
       espero que sepas lo especial que eres para mí, little cake<br>
-      ich liebe dich
+      ich liebe dich forever bonita
     </p>
 
-    <h2>will you be my valentine ❤️</h2>
+    <h2>will you be my valentine? ❤️ amor </h2>
 
     <div class="buttons">
       <button class="yes" onclick="sayYes()">yes</button>
       <button class="no" id="noBtn">no</button>
     </div>
+  </div>
 
-    <div class="message" id="message">
-      OLE you are mine my valentine 🎉
-    </div>
+  <!-- OVERLAY MESSAGE -->
+  <div class="overlay" id="overlay">
+    <p>OLE you are mine my valentine 🎉 POW POW POW</p>
   </div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
     const music = document.getElementById("music");
+    const overlay = document.getElementById("overlay");
 
     noBtn.addEventListener("mouseover", moveButton);
     noBtn.addEventListener("click", moveButton);
@@ -166,19 +186,11 @@
     }
 
     function sayYes() {
-      // Darken background
       document.body.classList.add("dark");
-
-      // Start music
       music.style.display = "block";
+      overlay.classList.add("show");
 
-      // Show message
-      document.getElementById("message").style.display = "block";
-
-      // Hearts
       for (let i = 0; i < 20; i++) createHeart();
-
-      // Confetti
       for (let i = 0; i < 40; i++) createConfetti();
     }
 
