@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Be My Valentine ❤️</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
     body {
       margin: 0;
@@ -13,7 +14,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: white;
       text-align: center;
       overflow: hidden;
     }
@@ -32,19 +33,18 @@
 
     h1 {
       font-size: 2.3rem;
-      margin-bottom: 10px;
-      font-weight: 600;
+      margin-bottom: 15px;
     }
 
     p {
       font-size: 1.1rem;
-      margin-bottom: 20px;
       line-height: 1.4;
+      margin-bottom: 20px;
     }
 
     h2 {
-      margin-bottom: 25px;
       font-size: 1.4rem;
+      margin-bottom: 25px;
     }
 
     .buttons {
@@ -53,23 +53,34 @@
     }
 
     button {
-      background: #ff4d6d;
       border: none;
-      color: white;
-      font-size: 1.05rem;
-      padding: 12px 22px;
       border-radius: 30px;
+      padding: 12px 22px;
+      font-size: 1.05rem;
       cursor: pointer;
       position: absolute;
     }
 
     .yes {
+      background: #ff4d6d;
+      color: white;
       left: 20%;
     }
 
     .no {
       background: #555;
+      color: white;
       left: 55%;
+    }
+
+    #playMusic {
+      margin-bottom: 20px;
+      background: #ff4d6d;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
     }
 
     .message {
@@ -88,20 +99,13 @@
     .heart {
       position: absolute;
       bottom: -20px;
-      color: #ff4d6d;
       font-size: 24px;
       animation: floatUp 4s linear infinite;
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) scale(1.5);
-        opacity: 0;
-      }
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
     }
 
     iframe {
@@ -109,12 +113,13 @@
     }
   </style>
 </head>
+
 <body>
 
-  <!-- YouTube Raindance -->
-  <iframe id="music" width="0" height="0"
+  <!-- YouTube Music -->
+  <iframe
+    id="music"
     src="https://www.youtube.com/embed/QkUPur9ZvoI?autoplay=1&loop=1&playlist=QkUPur9ZvoI"
-    title="Raindance by Dave"
     allow="autoplay">
   </iframe>
 
@@ -124,10 +129,12 @@
     <p>
       i have a important question<br><br>
       espero que sepas lo especial que eres para mí, little cake<br>
-      ich liebe dich
+      ich liebe dich forever amor 
     </p>
 
-    <h2>will you be my valentine ❤️</h2>
+    <button id="playMusic">Play Raindance</button>
+
+    <h2>will you be my valentine ❤️ click on no for surprise jaja </h2>
 
     <div class="buttons">
       <button class="yes" onclick="sayYes()">yes</button>
@@ -143,14 +150,14 @@
 
   <script>
     const noBtn = document.getElementById("noBtn");
+    const playBtn = document.getElementById("playMusic");
     const music = document.getElementById("music");
 
-    // Play music on first tap (iPhone requires interaction)
-    document.body.addEventListener("click", () => {
-      music.style.display = "block"; // make iframe active
-    }, { once: true });
+    playBtn.addEventListener("click", () => {
+      music.style.display = "block";
+      playBtn.style.display = "none";
+    });
 
-    // No button moves away
     noBtn.addEventListener("mouseover", moveButton);
     noBtn.addEventListener("click", moveButton);
 
@@ -161,7 +168,6 @@
       noBtn.style.top = y + "px";
     }
 
-    // Yes button action
     function sayYes() {
       document.getElementById("message").style.display = "block";
       for (let i = 0; i < 25; i++) createHeart();
@@ -172,7 +178,6 @@
       heart.className = "heart";
       heart.innerHTML = "❤️";
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
       document.getElementById("hearts").appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
     }
