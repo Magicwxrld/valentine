@@ -17,6 +17,11 @@
       color: white;
       text-align: center;
       overflow: hidden;
+      transition: background 1s ease;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #1f1f1f, #3a3a3a);
     }
 
     .card {
@@ -73,39 +78,41 @@
       left: 55%;
     }
 
-    #playMusic {
-      margin-bottom: 20px;
-      background: #ff4d6d;
-      color: white;
-      padding: 10px 22px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
-    }
-
     .message {
       margin-top: 25px;
       font-size: 1.4rem;
       display: none;
     }
 
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-    }
-
+    /* HEARTS */
     .heart {
-      position: absolute;
+      position: fixed;
       bottom: -20px;
       font-size: 24px;
-      animation: floatUp 4s linear infinite;
+      animation: floatUp 4s linear forwards;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
       0% { transform: translateY(0); opacity: 1; }
       100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    /* CONFETTI */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 10px;
+      height: 10px;
+      background: red;
+      opacity: 0.9;
+      animation: fall 4s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
     }
 
     iframe {
@@ -129,12 +136,10 @@
     <p>
       i have a important question<br><br>
       espero que sepas lo especial que eres para mí, little cake<br>
-      ich liebe dich forever amor 
+      ich liebe dich
     </p>
 
-    <button id="playMusic">Play Raindance</button>
-
-    <h2>will you be my valentine ❤️ click on no for surprise jaja </h2>
+    <h2>will you be my valentine ❤️</h2>
 
     <div class="buttons">
       <button class="yes" onclick="sayYes()">yes</button>
@@ -146,17 +151,9 @@
     </div>
   </div>
 
-  <div class="hearts" id="hearts"></div>
-
   <script>
     const noBtn = document.getElementById("noBtn");
-    const playBtn = document.getElementById("playMusic");
     const music = document.getElementById("music");
-
-    playBtn.addEventListener("click", () => {
-      music.style.display = "block";
-      playBtn.style.display = "none";
-    });
 
     noBtn.addEventListener("mouseover", moveButton);
     noBtn.addEventListener("click", moveButton);
@@ -169,8 +166,20 @@
     }
 
     function sayYes() {
+      // Darken background
+      document.body.classList.add("dark");
+
+      // Start music
+      music.style.display = "block";
+
+      // Show message
       document.getElementById("message").style.display = "block";
-      for (let i = 0; i < 25; i++) createHeart();
+
+      // Hearts
+      for (let i = 0; i < 20; i++) createHeart();
+
+      // Confetti
+      for (let i = 0; i < 40; i++) createConfetti();
     }
 
     function createHeart() {
@@ -178,8 +187,18 @@
       heart.className = "heart";
       heart.innerHTML = "❤️";
       heart.style.left = Math.random() * 100 + "vw";
-      document.getElementById("hearts").appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.background = `hsl(${Math.random() * 360}, 80%, 60%)`;
+      confetti.style.animationDuration = (Math.random() * 2 + 3) + "s";
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 4000);
     }
   </script>
 
